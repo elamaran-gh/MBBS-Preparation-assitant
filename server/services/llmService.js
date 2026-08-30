@@ -130,10 +130,12 @@ const DEFAULT_ANSWER = {
   ]
 };
 
+// Google retired gemini-2.0-flash on June 1, 2026 — using gemini-3.6-flash,
+// the current free-tier recommended Flash model.
 const GEMINI_LLM_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
 
-// gemini-2.0-flash's free tier has a stricter per-minute limit than the
+// gemini-3.6-flash's free tier has a stricter per-minute limit than the
 // embedding endpoint, so this throttle uses a longer minimum gap.
 // No caching — just spacing, same pattern as embeddingService.js.
 const MIN_REQUEST_INTERVAL_MS = 4500;
@@ -159,7 +161,7 @@ const REQUIRED_ANSWER_KEYS = [
 ];
 
 /**
- * Calls Google Gemini's gemini-2.0-flash API, asking for JSON output that
+ * Calls Google Gemini's gemini-3.6-flash API, asking for JSON output that
  * matches our structured answer shape directly (via responseMimeType).
  * Throws on any failure or malformed shape so the caller can fall back to the mock bank.
  */

@@ -1,12 +1,13 @@
 import config from '../config/env.js';
 import vectorDbConfig from '../config/vectorDb.js';
 
-// Gemini's text-embedding-004 model outputs 768-dimension vectors.
-// Read from vectorDb config so this stays in sync with the Qdrant collection size
-// (see config/vectorDb.js — single source of truth for both places).
+// Google retired text-embedding-004 on Jan 14, 2026 — now using gemini-embedding-001,
+// its default output is 3072 dimensions, but it supports Matryoshka-based truncation
+// via outputDimensionality, so we request 768 to match our existing Qdrant collection
+// (see config/vectorDb.js — single source of truth for the dimension value).
 const EMBEDDING_DIMENSIONS = vectorDbConfig.vectorDimensions;
 const GEMINI_EMBED_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent';
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent';
 
 // Simple throttle: guarantees at least this many ms between real Gemini calls,
 // so frequent dev testing (or bulk-embedding many questions in one loop later)
@@ -25,7 +26,7 @@ const throttleGeminiRequest = async () => {
 };
 
 /**
- * Calls Google Gemini's text-embedding-004 API.
+ * Calls Google Gemini's gemini-embedding-001 API, truncated to 768 dimensions.
  * Throws on failure so the caller can fall back to the local generator.
  */
 const generateGeminiEmbedding = async (text) => {
@@ -35,7 +36,12 @@ const generateGeminiEmbedding = async (text) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      content: { parts: [{ text }] }
+      content: { parts: [{ text }] },
+      // SEMANTIC_SIMILARITY fits our use case: we embed question text both when
+      // indexing (populateVectors.js) and when querying (searchSimilar), so it's
+      // symmetric question-to-question comparison rather than asymmetric retrieval.
+      taskType: 'SEMANTIC_SIMILARITY',
+      outputDimensionality: EMBEDDING_DIMENSIONS
     })
   });
 
