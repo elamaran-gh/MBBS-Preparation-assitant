@@ -67,6 +67,15 @@ const questionSchema = new mongoose.Schema(
   }
 );
 
+// Text index required by:
+// - questionController.searchQuestions ($text search on GET /api/questions/search)
+// - vectorService.searchSimilar's MongoDB fallback (used when Qdrant isn't configured)
+// Weighted so a match in questionText ranks higher than a match in topic/chapter.
+questionSchema.index(
+  { questionText: "text", topic: "text", chapter: "text" },
+  { weights: { questionText: 5, topic: 3, chapter: 1 }, name: "QuestionTextIndex" }
+);
+
 const Question = mongoose.model("Question", questionSchema);
 
 export default Question;
