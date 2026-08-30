@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+// In production (Vercel), set VITE_API_URL to your deployed Render backend URL,
+// e.g. https://your-app.onrender.com/api — falls back to localhost for local dev.
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 /**
  * Helper to execute fetch requests with error handling
