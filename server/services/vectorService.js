@@ -17,7 +17,9 @@ const qdrantFetch = async (endpoint, options = {}) => {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Qdrant API error [${response.status}]: ${errorText}`);
+    const error = new Error(`Qdrant API error [${response.status}]: ${errorText}`);
+    error.status = response.status;
+    throw error;
   }
 
   return response.json();
@@ -34,24 +36,44 @@ export const initCollection = async () => {
 
   try {
     console.log(`Checking if Qdrant collection '${vectorDbConfig.collectionName}' exists...`);
-    // Try to get collection info
     await qdrantFetch(`/collections/${vectorDbConfig.collectionName}`);
     console.log(`Qdrant collection '${vectorDbConfig.collectionName}' already exists.`);
+    return true;
   } catch (error) {
-    console.log(`Creating Qdrant collection '${vectorDbConfig.collectionName}'...`);
-    // Create collection with default 384-dimension vector configuration (matching our embedding service)
-    await qdrantFetch(`/collections/${vectorDbConfig.collectionName}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        vectors: {
-          size: 384,
-          distance: 'Cosine'
-        }
-      })
-    });
-    console.log(`Qdrant collection '${vectorDbConfig.collectionName}' created successfully.`);
+    // Only a genuine 404 means "collection doesn't exist yet" — go ahead and create it.
+    // Anything else (401/403 bad API key, network/DNS failure, cluster asleep, etc.)
+    // is a real problem, not a reason to attempt creation — and definitely not a
+    // reason to crash the whole server, since Qdrant is an optional derived index
+    // and MongoDB remains the source of truth.
+    if (error.status !== 404) {
+      console.error(
+        `WARNING: Qdrant is configured but unreachable (${error.message}). ` +
+        `Continuing without Qdrant — semantic search will use the MongoDB fallback.`
+      );
+      return false;
+    }
+
+    try {
+      console.log(`Creating Qdrant collection '${vectorDbConfig.collectionName}'...`);
+      await qdrantFetch(`/collections/${vectorDbConfig.collectionName}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          vectors: {
+            size: vectorDbConfig.vectorDimensions,
+            distance: 'Cosine'
+          }
+        })
+      });
+      console.log(`Qdrant collection '${vectorDbConfig.collectionName}' created successfully.`);
+      return true;
+    } catch (createError) {
+      console.error(
+        `WARNING: Failed to create Qdrant collection (${createError.message}). ` +
+        `Continuing without Qdrant — semantic search will use the MongoDB fallback.`
+      );
+      return false;
+    }
   }
-  return true;
 };
 
 /**

@@ -130,37 +130,99 @@ const DEFAULT_ANSWER = {
   ]
 };
 
+const GEMINI_LLM_URL =
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+// gemini-2.0-flash's free tier has a stricter per-minute limit than the
+// embedding endpoint, so this throttle uses a longer minimum gap.
+// No caching — just spacing, same pattern as embeddingService.js.
+const MIN_REQUEST_INTERVAL_MS = 4500;
+let lastRequestTimestamp = 0;
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const throttleGeminiRequest = async () => {
+  const elapsed = Date.now() - lastRequestTimestamp;
+  if (elapsed < MIN_REQUEST_INTERVAL_MS) {
+    await sleep(MIN_REQUEST_INTERVAL_MS - elapsed);
+  }
+  lastRequestTimestamp = Date.now();
+};
+
+const REQUIRED_ANSWER_KEYS = [
+  'definition',
+  'mainPoints',
+  'clinicalFeatures',
+  'investigations',
+  'management',
+  'importantExamPoints'
+];
+
 /**
- * Service to interface with LLM.
+ * Calls Google Gemini's gemini-2.0-flash API, asking for JSON output that
+ * matches our structured answer shape directly (via responseMimeType).
+ * Throws on any failure or malformed shape so the caller can fall back to the mock bank.
  */
-export const generateAnswer = async (promptText, contextText = '') => {
-  if (config.LLM_API_KEY) {
-    try {
-      // TODO: Replace with live LLM client API call (e.g. Gemini, OpenAI, Cohere)
-      // For example, calling Gemini API using standard fetch:
-      /*
-      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + config.LLM_API_KEY, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `${promptText}\n\nContext:\n${contextText}\n\nProvide response in JSON matching: {"answer": {"definition": "...", "mainPoints": ["..."], "clinicalFeatures": ["..."], "investigations": ["..."], "management": ["..."], "importantExamPoints": ["..."]}}`
-            }]
-          }]
-        })
-      });
-      const data = await response.json();
-      const textResponse = data.candidates[0].content.parts[0].text;
-      return JSON.parse(textResponse);
-      */
-      console.log('LLM API key detected. Running live LLM query (stub)...');
-    } catch (err) {
-      console.error('Failed to query LLM API, using high quality fallback:', err);
-    }
+const generateGeminiAnswer = async (promptText, contextText) => {
+  await throttleGeminiRequest();
+
+  const fullPrompt = `You are helping an MBBS (undergraduate medical) student prepare for exams.
+
+Question: "${promptText}"
+
+Reference context (use this to ground your answer where relevant):
+${contextText}
+
+Respond with a single JSON object with exactly these keys:
+{
+  "definition": "string",
+  "mainPoints": ["string", "..."],
+  "clinicalFeatures": ["string", "..."],
+  "investigations": ["string", "..."],
+  "management": ["string", "..."],
+  "importantExamPoints": ["string", "..."]
+}
+
+Keep it exam-oriented and concise. Do not include any text outside the JSON object.`;
+
+  const response = await fetch(`${GEMINI_LLM_URL}?key=${config.LLM_API_KEY}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: fullPrompt }] }],
+      generationConfig: {
+        responseMimeType: 'application/json'
+      }
+    })
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Gemini LLM API error [${response.status}]: ${errorText}`);
   }
 
-  // Live matching of high-quality mock database based on keywords in prompt
+  const data = await response.json();
+  const textResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+  if (!textResponse) {
+    throw new Error('Gemini LLM API returned an unexpected response shape.');
+  }
+
+  const parsedAnswer = JSON.parse(textResponse);
+
+  const missingKeys = REQUIRED_ANSWER_KEYS.filter((key) => !(key in parsedAnswer));
+  if (missingKeys.length > 0) {
+    throw new Error(`Gemini LLM response is missing keys: ${missingKeys.join(', ')}`);
+  }
+
+  return parsedAnswer;
+};
+
+/**
+ * Falls back to the local mock medical answer bank (keyword-matched),
+ * or the generic DEFAULT_ANSWER template if nothing matches.
+ */
+const generateMockAnswer = (promptText) => {
   const lowercasePrompt = promptText.toLowerCase();
   let matchedKey = null;
 
@@ -172,12 +234,24 @@ export const generateAnswer = async (promptText, contextText = '') => {
     matchedKey = 'tuberculosis';
   }
 
-  const answer = matchedKey ? MOCK_MEDICAL_ANSWERS[matchedKey] : DEFAULT_ANSWER;
+  return matchedKey ? MOCK_MEDICAL_ANSWERS[matchedKey] : DEFAULT_ANSWER;
+};
+
+/**
+ * Service to interface with LLM.
+ */
+export const generateAnswer = async (promptText, contextText = '') => {
+  if (config.LLM_API_KEY) {
+    try {
+      const answer = await generateGeminiAnswer(promptText, contextText);
+      return { answer, sources: [] };
+    } catch (error) {
+      console.error('Failed to generate live Gemini answer, using local fallback:', error.message);
+    }
+  }
 
   return {
-    answer: {
-      ...answer
-    },
+    answer: { ...generateMockAnswer(promptText) },
     sources: []
   };
 };
