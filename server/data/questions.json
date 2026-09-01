@@ -361,5 +361,66 @@
     "questionType": "Short Essay",
     "source": "RGUHS MBBS Phase II Pharmacology Paper I, QP Code 1028, 02-Mar-2022",
     "referenceIds": ["ref-morphine"]
+  },
+    {
+    "id": "pbdshu-path-2022-001",
+    "questionText": "A 60-year-old female with known hypertension presented with severe breathlessness and altered sensorium. Examination revealed bilateral basal crepitations, raised jugular venous pressure, hepatomegaly, and pedal edema; ECG showed T-wave inversion. (a) What is your diagnosis? (b) What findings support this diagnosis? (c) Explain the pathophysiology of breathlessness in this patient. (d) What are the complications of this condition?",
+    "university": "Pandit Bhagwat Dayal Sharma University of Health Sciences (Rohtak)",
+    "year": 2022,
+    "subject": "Pathology",
+    "chapter": "Cardiovascular Pathology",
+    "topic": "Acute Left Ventricular Failure",
+    "questionType": "Long Essay",
+    "source": "MBBS 2nd Prof. 2022, Pathology Paper-A (previous-year exam question, cleaned from a publicly compiled archive)",
+    "referenceIds": ["ref-acute-lv-failure"]
+  },
+  {
+    "id": "pbdshu-path-2022-002",
+    "questionText": "A 7-year-old child presented with decreased urine output, facial puffiness, and cola-colored urine, with raised blood pressure. (a) What is the most likely diagnosis? (b) Discuss this condition. (c) Describe the expected renal biopsy findings. (d) List the relevant laboratory investigations.",
+    "university": "Pandit Bhagwat Dayal Sharma University of Health Sciences (Rohtak)",
+    "year": 2022,
+    "subject": "Pathology",
+    "chapter": "Renal Pathology",
+    "topic": "Acute Poststreptococcal Glomerulonephritis",
+    "questionType": "Long Essay",
+    "source": "MBBS 2nd Prof. 2022, Pathology Paper-B (previous-year exam question, cleaned from a publicly compiled archive)",
+    "referenceIds": ["ref-acute-glomerulonephritis"]
+  },
+  {
+    "id": "pbdshu-micro-2022-001",
+    "questionText": "A 23-year-old male sustained a crush injury to his right leg in a road traffic accident, presenting with a heavily soil-contaminated wound, crushed local muscle, edema, pain, and crepitus on palpation. (a) What is the clinical diagnosis and the likely etiological agent? (b) What is the pathogenesis of this condition? (c) What other clinical conditions can this agent cause? (d) Describe the laboratory diagnosis.",
+    "university": "Pandit Bhagwat Dayal Sharma University of Health Sciences (Rohtak)",
+    "year": 2022,
+    "subject": "Microbiology",
+    "chapter": "Bacteriology",
+    "topic": "Gas Gangrene (Clostridial Myonecrosis)",
+    "questionType": "Long Essay",
+    "source": "MBBS 2nd Prof. 2022, Microbiology Paper (previous-year exam question, cleaned from a publicly compiled archive)",
+    "referenceIds": ["ref-gas-gangrene"]
+  },
+  {
+    "id": "pbdshu-pharm-2022-001",
+    "questionText": "A 55-year-old alcoholic patient was started on metronidazole for giardiasis. The next day he developed palpitations, raised blood pressure, vomiting, and flushing after consuming alcohol. (a) What is the diagnosis, and explain the likely reason for it. (b) List other drugs known to cause a similar interaction with alcohol. (c) What is the mechanism of action of metronidazole? (d) What are its other clinical uses?",
+    "university": "Pandit Bhagwat Dayal Sharma University of Health Sciences (Rohtak)",
+    "year": 2022,
+    "subject": "Pharmacology",
+    "chapter": "Chemotherapy",
+    "topic": "Metronidazole and Disulfiram-like Reaction",
+    "questionType": "Long Essay",
+    "source": "MBBS 2nd Prof. 2022, Pharmacology Paper-A (previous-year exam question, cleaned from a publicly compiled archive)",
+    "referenceIds": ["ref-metronidazole"]
+  },
+  {
+    "id": "pbdshu-pharm-2022-002",
+    "questionText": "Write short notes on: (a) Loading dose. (b) Zero-order kinetics, with examples of drugs following this pattern. (c) Factors affecting the absorption of a drug.",
+    "university": "Pandit Bhagwat Dayal Sharma University of Health Sciences (Rohtak)",
+    "year": 2022,
+    "subject": "Pharmacology",
+    "chapter": "Pharmacokinetics",
+    "topic": "Loading Dose and Zero-Order Kinetics",
+    "questionType": "Short Essay",
+    "source": "MBBS 2nd Prof. 2022, Pharmacology Paper-A (previous-year exam question, cleaned from a publicly compiled archive)",
+    "referenceIds": ["ref-pharmacokinetics-basics"]
   }
+  
 ]

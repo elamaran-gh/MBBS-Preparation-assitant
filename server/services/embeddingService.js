@@ -12,7 +12,11 @@ const GEMINI_EMBED_URL =
 // Simple throttle: guarantees at least this many ms between real Gemini calls,
 // so frequent dev testing (or bulk-embedding many questions in one loop later)
 // can't burst past the free-tier per-minute quota. No caching — just spacing.
-const MIN_REQUEST_INTERVAL_MS = 1200;
+// Widened from 1200ms after hitting a real 429 rate-limit around request #23
+// in a single populate-vectors run — this project's actual free-tier RPM
+// ceiling for the embedding endpoint is lower than the token-per-minute
+// limit alone would suggest. 4000ms keeps us safely under it.
+const MIN_REQUEST_INTERVAL_MS = 4000;
 let lastRequestTimestamp = 0;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

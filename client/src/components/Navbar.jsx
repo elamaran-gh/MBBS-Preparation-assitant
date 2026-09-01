@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { BookOpen, GraduationCap, Sparkles } from 'lucide-react';
+import { BookOpen, GraduationCap, Sparkles, FileText } from 'lucide-react';
 
 export const Navbar = () => {
   return (
@@ -35,6 +35,19 @@ export const Navbar = () => {
               }
             >
               Question Bank
+            </NavLink>
+            <NavLink
+              to="/study-from-pdf"
+              className={({ isActive }) =>
+                `flex items-center gap-1.5 text-sm font-medium transition duration-200 ${
+                  isActive
+                    ? 'text-medical-600 border-b-2 border-medical-600 py-1.5'
+                    : 'text-slate-600 hover:text-slate-950 py-1.5'
+                }`
+              }
+            >
+              <FileText size={15} />
+              Study from PDF
             </NavLink>
             <div className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2.5 py-1">
               <Sparkles size={11} className="fill-emerald-700" />

@@ -7,6 +7,7 @@ import QuestionDetail from './pages/QuestionDetail.jsx';
 import AIAnswer from './pages/AIAnswer.jsx';
 import SimilarQuestions from './pages/SimilarQuestions.jsx';
 import TextbookReference from './pages/TextbookReference.jsx';
+import StudyFromPDF from './pages/StudyFromPDF.jsx';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/question/:id/answer" element={<AIAnswer />} />
             <Route path="/question/:id/similar" element={<SimilarQuestions />} />
             <Route path="/reference/:id" element={<TextbookReference />} />
+            <Route path="/study-from-pdf" element={<StudyFromPDF />} />
           </Routes>
         </main>
         

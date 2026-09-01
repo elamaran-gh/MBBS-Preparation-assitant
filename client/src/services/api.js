@@ -82,6 +82,47 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ questionId, questionText })
     });
+  },
+
+  /**
+   * Uploads a PDF for processing (extract -> chunk -> embed -> store in Qdrant).
+   * Separate from apiRequest above: file uploads need multipart/form-data,
+   * and the browser must set that header itself (it includes a boundary
+   * string), so we deliberately do NOT set Content-Type manually here.
+   */
+  uploadPdf: async (file) => {
+    const formData = new FormData();
+    formData.append('pdf', file);
+
+    const response = await fetch(`${API_BASE_URL}/documents/upload`, {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Upload failed.');
+    }
+
+    return result;
+  },
+
+  /**
+   * Checks an uploaded document's processing status
+   */
+  getDocumentStatus: (documentId) => {
+    return apiRequest(`/documents/${documentId}`);
+  },
+
+  /**
+   * Asks a question grounded in one specific uploaded document
+   */
+  askPdfQuestion: (documentId, questionText) => {
+    return apiRequest(`/documents/${documentId}/ask`, {
+      method: 'POST',
+      body: JSON.stringify({ questionText })
+    });
   }
 };
 

@@ -271,5 +271,50 @@
     "content": "Morphine is an opioid analgesic that produces analgesia through activation of opioid receptors in the central nervous system. Important risks include respiratory depression, sedation, constipation and dependence.",
     "pageNumber": null,
     "source": "Prototype reference summary"
+  },
+    {
+    "id": "ref-acute-lv-failure",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Cardiovascular Pathology",
+    "topic": "Acute Left Ventricular Failure",
+    "content": "Acute left ventricular failure causes a rapid rise in pulmonary capillary pressure, leading to pulmonary edema and severe breathlessness. Underlying causes include longstanding hypertension and ischemic heart disease. Clinical assessment includes examination for crepitations, raised jugular venous pressure, and ECG changes.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-acute-glomerulonephritis",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Renal Pathology",
+    "topic": "Acute Poststreptococcal Glomerulonephritis",
+    "content": "Acute poststreptococcal glomerulonephritis typically follows a streptococcal throat or skin infection and presents with hematuria, edema, and hypertension in children. Renal biopsy characteristically shows diffuse proliferative changes with subepithelial immune deposits. Most cases resolve with supportive management.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-gas-gangrene",
+    "bookName": "Prototype Microbiology Reference",
+    "chapter": "Bacteriology",
+    "topic": "Gas Gangrene (Clostridial Myonecrosis)",
+    "content": "Gas gangrene is a severe soft-tissue infection caused by Clostridium species, typically Clostridium perfringens, following contamination of deep, devitalized tissue such as a crush wound. It is characterized by rapid muscle necrosis, gas production, and systemic toxicity, requiring urgent surgical debridement alongside antibiotics.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-metronidazole",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Chemotherapy",
+    "topic": "Metronidazole and Disulfiram-like Reaction",
+    "content": "Metronidazole is an antiprotozoal and antibacterial agent effective against anaerobic organisms and protozoa such as Giardia and Entamoeba. It can inhibit aldehyde dehydrogenase, causing a disulfiram-like reaction with alcohol consumption, including flushing, palpitations, and vomiting. Patients are advised to avoid alcohol during treatment.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-pharmacokinetics-basics",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Pharmacokinetics",
+    "topic": "Loading Dose and Zero-Order Kinetics",
+    "content": "A loading dose is a larger initial dose given to rapidly achieve a therapeutic plasma concentration, calculated from volume of distribution and target concentration. Zero-order kinetics describes elimination at a constant rate regardless of drug concentration, seen with drugs like phenytoin and ethanol at higher doses.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
   }
 ]

@@ -26,7 +26,7 @@ const qdrantFetch = async (endpoint, options = {}) => {
 };
 
 /**
- * Initializes the collection in Qdrant if configured.
+ * Initializes the question-bank collection in Qdrant if configured.
  */
 export const initCollection = async () => {
   if (!vectorDbConfig.isConfigured) {
@@ -35,9 +35,9 @@ export const initCollection = async () => {
   }
 
   try {
-    console.log(`Checking if Qdrant collection '${vectorDbConfig.collectionName}' exists...`);
-    await qdrantFetch(`/collections/${vectorDbConfig.collectionName}`);
-    console.log(`Qdrant collection '${vectorDbConfig.collectionName}' already exists.`);
+    console.log(`Checking if Qdrant collection '${vectorDbConfig.collections.questions}' exists...`);
+    await qdrantFetch(`/collections/${vectorDbConfig.collections.questions}`);
+    console.log(`Qdrant collection '${vectorDbConfig.collections.questions}' already exists.`);
     return true;
   } catch (error) {
     // Only a genuine 404 means "collection doesn't exist yet" — go ahead and create it.
@@ -54,8 +54,8 @@ export const initCollection = async () => {
     }
 
     try {
-      console.log(`Creating Qdrant collection '${vectorDbConfig.collectionName}'...`);
-      await qdrantFetch(`/collections/${vectorDbConfig.collectionName}`, {
+      console.log(`Creating Qdrant collection '${vectorDbConfig.collections.questions}'...`);
+      await qdrantFetch(`/collections/${vectorDbConfig.collections.questions}`, {
         method: 'PUT',
         body: JSON.stringify({
           vectors: {
@@ -64,7 +64,7 @@ export const initCollection = async () => {
           }
         })
       });
-      console.log(`Qdrant collection '${vectorDbConfig.collectionName}' created successfully.`);
+      console.log(`Qdrant collection '${vectorDbConfig.collections.questions}' created successfully.`);
       return true;
     } catch (createError) {
       console.error(
@@ -77,7 +77,7 @@ export const initCollection = async () => {
 };
 
 /**
- * Upserts a document vector and payload to Qdrant.
+ * Upserts a question vector and payload to Qdrant (question-bank collection).
  */
 export const upsertDocument = async (id, vector, payload) => {
   if (!vectorDbConfig.isConfigured) {
@@ -86,7 +86,7 @@ export const upsertDocument = async (id, vector, payload) => {
   }
 
   try {
-    await qdrantFetch(`/collections/${vectorDbConfig.collectionName}/points`, {
+    await qdrantFetch(`/collections/${vectorDbConfig.collections.questions}/points`, {
       method: 'PUT',
       body: JSON.stringify({
         points: [
@@ -113,13 +113,13 @@ export const upsertDocument = async (id, vector, payload) => {
 };
 
 /**
- * Performs semantic search on Qdrant.
+ * Performs semantic search on the question-bank Qdrant collection.
  * Falls back to MongoDB text/regex search if Qdrant is not configured.
  */
 export const searchSimilar = async (vector, limit = 5, queryText = '') => {
   if (vectorDbConfig.isConfigured) {
     try {
-      const result = await qdrantFetch(`/collections/${vectorDbConfig.collectionName}/points/search`, {
+      const result = await qdrantFetch(`/collections/${vectorDbConfig.collections.questions}/points/search`, {
         method: 'POST',
         body: JSON.stringify({
           vector: vector,
