@@ -271,6 +271,326 @@
     "content": "Morphine is an opioid analgesic that produces analgesia through activation of opioid receptors in the central nervous system. Important risks include respiratory depression, sedation, constipation and dependence.",
     "pageNumber": null,
     "source": "Prototype reference summary"
+  },
+  [
+  {
+    "id": "ref-nephrotic-syndrome",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Nephrology",
+    "topic": "Nephrotic Syndrome",
+    "content": "Nephrotic syndrome is characterized by heavy protein loss in urine, hypoalbuminemia, edema and associated lipid abnormalities. Evaluation focuses on the cause, severity of proteinuria, renal function and complications. Management depends on the underlying cause and may include supportive measures and disease-specific therapy.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-chronic-hepatitis",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Gastroenterology",
+    "topic": "Chronic Hepatitis",
+    "content": "Chronic hepatitis refers to persistent hepatic inflammation. Important causes include chronic viral infection, autoimmune disease, metabolic conditions and drug-related injury. Assessment considers liver injury, fibrosis and the underlying cause. Long-term complications may include cirrhosis and hepatocellular carcinoma.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-tumour-markers",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Oncology",
+    "topic": "Tumour Markers",
+    "content": "Tumour markers are measurable substances associated with malignancy. They may support diagnosis in selected situations, help monitor treatment response or detect recurrence. Their interpretation should be combined with clinical findings and other diagnostic investigations.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-acute-pancreatitis",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Gastroenterology",
+    "topic": "Acute Pancreatitis",
+    "content": "Acute pancreatitis is an acute inflammatory disorder of the pancreas. Common causes include gallstone disease and alcohol exposure. Initial management focuses on assessment of severity, fluid management, analgesia, nutritional support and treatment of the underlying cause or complications.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-paracetamol-poisoning",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Toxicology",
+    "topic": "Paracetamol Poisoning",
+    "content": "Paracetamol overdose can cause potentially serious hepatic injury. Assessment includes determining the amount and timing of ingestion and evaluating liver-related investigations. N-acetylcysteine is the established antidotal treatment when indicated.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-acute-kidney-injury",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Nephrology",
+    "topic": "Acute Kidney Injury",
+    "content": "Acute kidney injury is an abrupt decline in kidney function. Causes are commonly categorized as prerenal, intrinsic renal or postrenal. Evaluation includes history, examination, laboratory assessment and identification of reversible causes.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-secondary-hypertension",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Cardiology",
+    "topic": "Secondary Hypertension",
+    "content": "Secondary hypertension results from an identifiable underlying condition. Important categories include renal disease, endocrine disorders, vascular disorders and medication-related causes. Investigation should be guided by clinical clues rather than applying an indiscriminate testing strategy.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-thrombolytics",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Cardiology",
+    "topic": "Thrombolytic Therapy",
+    "content": "Thrombolytic medicines promote dissolution of intravascular thrombi by enhancing fibrinolysis. The major safety concern is bleeding, including potentially serious intracranial or internal bleeding. Patient selection and contraindication assessment are therefore important.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-peptic-ulcer",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Gastroenterology",
+    "topic": "Peptic Ulcer Disease",
+    "content": "Peptic ulcer disease involves mucosal ulceration commonly associated with Helicobacter pylori infection or nonsteroidal anti-inflammatory drug exposure. Complications can include bleeding, perforation and gastric outlet obstruction.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-rifampicin-toxicity",
+    "bookName": "Prototype Medicine Reference",
+    "chapter": "Infectious Diseases",
+    "topic": "Rifampicin Toxicity",
+    "content": "Rifampicin can cause adverse effects including hepatic injury and important drug interactions because it induces hepatic drug-metabolizing enzymes. Monitoring and recognition of clinically significant adverse effects are important during therapy.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+
+  {
+    "id": "ref-thyrotoxicosis",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "Endocrine Surgery",
+    "topic": "Thyrotoxicosis",
+    "content": "Primary thyrotoxicosis results from excessive thyroid hormone activity. Evaluation includes clinical assessment and thyroid function testing. Management options depend on the cause and may include medicines, radioactive iodine or surgery in selected patients.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-breast-carcinoma",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "Breast Surgery",
+    "topic": "Breast Carcinoma",
+    "content": "Breast carcinoma evaluation involves clinical assessment, imaging and tissue diagnosis. Treatment is based on stage and tumor biology and can involve surgery, radiotherapy, endocrine treatment, chemotherapy or targeted therapy.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-basal-cell-carcinoma",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "Surgical Oncology",
+    "topic": "Basal Cell Carcinoma",
+    "content": "Basal cell carcinoma is a common skin malignancy characterized by local invasion and very low metastatic potential. Treatment is primarily directed at complete local control using an approach appropriate to lesion size, location and patient factors.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-papillary-thyroid-carcinoma",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "Endocrine Surgery",
+    "topic": "Papillary Thyroid Carcinoma",
+    "content": "Papillary thyroid carcinoma is a differentiated thyroid malignancy. It commonly spreads through lymphatic pathways and is evaluated using clinical examination, thyroid imaging and tissue sampling when indicated.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-gynaecomastia",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "Breast Surgery",
+    "topic": "Gynaecomastia",
+    "content": "Gynaecomastia is benign enlargement of male breast glandular tissue related to an imbalance between estrogenic and androgenic effects. Evaluation considers age, medications, systemic disease and other causes of hormonal imbalance.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-tension-pneumothorax",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "Thoracic Surgery",
+    "topic": "Tension Pneumothorax",
+    "content": "Tension pneumothorax is a life-threatening condition in which intrapleural pressure compromises ventilation and circulation. It requires immediate recognition and decompression followed by definitive pleural drainage.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-secondary-haemorrhage",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "General Surgery",
+    "topic": "Secondary Haemorrhage",
+    "content": "Secondary haemorrhage is bleeding that occurs after the immediate postoperative or traumatic period. It can be associated with infection, vessel erosion or sloughing of a clot and requires prompt assessment and control of bleeding.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-intermittent-claudication",
+    "bookName": "Prototype Surgery Reference",
+    "chapter": "Vascular Surgery",
+    "topic": "Intermittent Claudication",
+    "content": "Intermittent claudication is exertional limb pain caused by inadequate arterial blood flow that improves with rest. Assessment includes vascular examination and appropriate non-invasive vascular testing.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+
+  {
+    "id": "ref-shock",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Hemodynamic Disorders",
+    "topic": "Shock",
+    "content": "Shock is a state of systemic circulatory failure causing inadequate tissue perfusion. Major categories include hypovolemic, cardiogenic, distributive and obstructive shock. Septic shock involves infection-associated dysregulated host responses, vascular abnormalities and impaired tissue perfusion.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-megaloblastic-anemia",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Hematology",
+    "topic": "Megaloblastic Anemia",
+    "content": "Megaloblastic anemia results from impaired DNA synthesis, commonly related to vitamin B12 or folate deficiency. Blood and marrow findings reflect abnormal maturation of erythroid and myeloid precursors.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-necrosis",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Cell Injury",
+    "topic": "Necrosis",
+    "content": "Necrosis is irreversible cell injury associated with loss of membrane integrity and enzymatic breakdown of cellular components. Major patterns include coagulative, liquefactive, caseous, fat and fibrinoid necrosis.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-invasion-metastasis",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Neoplasia",
+    "topic": "Invasion and Metastasis",
+    "content": "Tumor invasion involves local penetration of surrounding tissue, while metastasis represents spread to distant sites. Tumor cells can spread through lymphatic channels, blood vessels or body cavities depending on the malignancy.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-iron-deficiency-anemia",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Hematology",
+    "topic": "Iron Deficiency Anemia",
+    "content": "Iron deficiency anemia typically produces a microcytic, hypochromic blood picture. Laboratory assessment commonly includes hemoglobin, red-cell indices and measures of iron stores and availability.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-glomerular-injury",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Renal Pathology",
+    "topic": "Glomerular Injury",
+    "content": "Glomerular injury can result from immune-mediated mechanisms, hemodynamic disturbances, metabolic injury and other systemic diseases. The resulting structural damage can produce proteinuria, hematuria and reduced renal function.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+
+  {
+    "id": "ref-bioavailability",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Pharmacokinetics",
+    "topic": "Bioavailability",
+    "content": "Bioavailability describes the fraction of an administered drug dose that reaches systemic circulation in an active form. It is influenced by absorption, formulation, route of administration and first-pass metabolism.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-organophosphorus-poisoning",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Autonomic Nervous System",
+    "topic": "Organophosphorus Poisoning",
+    "content": "Organophosphorus compounds inhibit acetylcholinesterase and produce excessive cholinergic activity. Management involves appropriate emergency supportive care and antidotal therapy according to clinical severity and established toxicology protocols.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-phenytoin",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "CNS Pharmacology",
+    "topic": "Phenytoin",
+    "content": "Phenytoin is an antiepileptic drug that reduces repetitive neuronal firing primarily through effects on voltage-gated sodium channels. Important adverse effects include neurological effects and dose-related or chronic systemic adverse reactions.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-aspirin",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Autacoids and NSAIDs",
+    "topic": "Aspirin",
+    "content": "Aspirin inhibits cyclooxygenase activity and reduces prostaglandin and thromboxane synthesis. Its effects include analgesic, antipyretic and anti-inflammatory actions, while low-dose therapy produces antiplatelet effects.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-bronchodilators",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Respiratory Pharmacology",
+    "topic": "Bronchodilators",
+    "content": "Bronchodilator classes include beta-2 adrenergic agonists and muscarinic antagonists. They reduce airway obstruction through different mechanisms and are used according to the underlying respiratory disease and clinical context.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-morphine",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "CNS Pharmacology",
+    "topic": "Morphine",
+    "content": "Morphine is an opioid analgesic that produces analgesia through activation of opioid receptors in the central nervous system. Important risks include respiratory depression, sedation, constipation and dependence.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-acute-lv-failure",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Cardiovascular Pathology",
+    "topic": "Acute Left Ventricular Failure",
+    "content": "Acute left ventricular failure causes a rapid rise in pulmonary capillary pressure, leading to pulmonary edema and severe breathlessness. Underlying causes include longstanding hypertension and ischemic heart disease. Clinical assessment includes examination for crepitations, raised jugular venous pressure, and ECG changes.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-acute-glomerulonephritis",
+    "bookName": "Prototype Pathology Reference",
+    "chapter": "Renal Pathology",
+    "topic": "Acute Poststreptococcal Glomerulonephritis",
+    "content": "Acute poststreptococcal glomerulonephritis typically follows a streptococcal throat or skin infection and presents with hematuria, edema, and hypertension in children. Renal biopsy characteristically shows diffuse proliferative changes with subepithelial immune deposits. Most cases resolve with supportive management.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-gas-gangrene",
+    "bookName": "Prototype Microbiology Reference",
+    "chapter": "Bacteriology",
+    "topic": "Gas Gangrene (Clostridial Myonecrosis)",
+    "content": "Gas gangrene is a severe soft-tissue infection caused by Clostridium species, typically Clostridium perfringens, following contamination of deep, devitalized tissue such as a crush wound. It is characterized by rapid muscle necrosis, gas production, and systemic toxicity, requiring urgent surgical debridement alongside antibiotics.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-metronidazole",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Chemotherapy",
+    "topic": "Metronidazole and Disulfiram-like Reaction",
+    "content": "Metronidazole is an antiprotozoal and antibacterial agent effective against anaerobic organisms and protozoa such as Giardia and Entamoeba. It can inhibit aldehyde dehydrogenase, causing a disulfiram-like reaction with alcohol consumption, including flushing, palpitations, and vomiting. Patients are advised to avoid alcohol during treatment.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
+  },
+  {
+    "id": "ref-pharmacokinetics-basics",
+    "bookName": "Prototype Pharmacology Reference",
+    "chapter": "Pharmacokinetics",
+    "topic": "Loading Dose and Zero-Order Kinetics",
+    "content": "A loading dose is a larger initial dose given to rapidly achieve a therapeutic plasma concentration, calculated from volume of distribution and target concentration. Zero-order kinetics describes elimination at a constant rate regardless of drug concentration, seen with drugs like phenytoin and ethanol at higher doses.",
+    "pageNumber": null,
+    "source": "Prototype reference summary"
   }
+]
   
 ]
