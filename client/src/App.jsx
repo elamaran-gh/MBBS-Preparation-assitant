@@ -32,7 +32,7 @@ function App() {
         {/* Footer */}
         <footer className="bg-white border-t border-slate-200/80 py-6 mt-12 text-center text-xs text-slate-500 font-medium">
           <div className="max-w-7xl mx-auto px-4">
-            MBBS AI Study Assistant — A Portfolio Proof-of-Concept for Medical Syllabus-Oriented RAG.
+            © 2026 MBBS AI Study Assistant — Medical Syllabus-Oriented RAG. All Rights Reserved.
           </div>
         </footer>
       </div>
