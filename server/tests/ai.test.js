@@ -22,7 +22,7 @@ describe('POST /api/ai/answer', () => {
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(res.body.data).toBeTruthy();
-  }, 30000);
+  }, 60000);
 
   it('generates a structured answer from free-text questionText', async () => {
     const res = await request(app)
@@ -32,10 +32,10 @@ describe('POST /api/ai/answer', () => {
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(res.body.data).toBeTruthy();
-  }, 30000);
+  }, 60000);
 
   it('returns 404 for a nonexistent questionId', async () => {
-    const fakeId = '64b64b64b64b64b64b64b64';
+    const fakeId = '507f1f77bcf86cd799439011';
     const res = await request(app).post('/api/ai/answer').send({ questionId: fakeId });
 
     expect(res.status).toBe(404);

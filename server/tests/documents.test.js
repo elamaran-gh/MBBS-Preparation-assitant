@@ -12,9 +12,12 @@ const SAMPLE_PDF = path.join(__dirname, 'fixtures/sample.pdf');
 const TEST_MONGODB_URI =
   process.env.TEST_MONGODB_URI || 'mongodb://127.0.0.1:27017/mbbs-ai-study-assistant-test';
 
+import { initPdfCollection } from '../services/pdfVectorService.js';
+
 beforeAll(async () => {
   await mongoose.connect(TEST_MONGODB_URI);
   await Document.deleteMany({});
+  await initPdfCollection();
 }, 30000);
 
 afterAll(async () => {
@@ -57,7 +60,7 @@ describe('GET /api/documents/:id and POST /api/documents/:id/ask', () => {
   });
 
   it('returns 404 for a nonexistent document id', async () => {
-    const fakeId = '64b64b64b64b64b64b64b64';
+    const fakeId = '507f1f77bcf86cd799439011';
     const res = await request(app).get(`/api/documents/${fakeId}`);
     expect(res.status).toBe(404);
   });

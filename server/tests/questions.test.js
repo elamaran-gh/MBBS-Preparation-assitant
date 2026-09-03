@@ -115,7 +115,7 @@ describe('GET /api/questions/:id', () => {
   });
 
   it('returns 404 for a well-formed but nonexistent id', async () => {
-    const fakeId = '64b64b64b64b64b64b64b64';
+    const fakeId = '507f1f77bcf86cd799439011';
     const res = await request(app).get(`/api/questions/${fakeId}`);
     expect(res.status).toBe(404);
     expect(res.body.success).toBe(false);
