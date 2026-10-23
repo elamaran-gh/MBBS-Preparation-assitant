@@ -1,12 +1,10 @@
 import vectorDbConfig from '../config/vectorDb.js';
 import { generateEmbedding } from './embeddingService.js';
- 
-// Helper for Qdrant API requests — deliberately a separate copy from
-// vectorService.js's version rather than a shared one, so this file can be
-// read on its own without needing to understand a shared abstraction.
+import { buildPdfChunkPoint } from '../models/PdfChunk.js';
+
 const qdrantFetch = async (endpoint, options = {}) => {
   if (!vectorDbConfig.isConfigured) return null;
- 
+
   const url = `${vectorDbConfig.url}${endpoint}`;
   const response = await fetch(url, {
     ...options,
@@ -16,36 +14,36 @@ const qdrantFetch = async (endpoint, options = {}) => {
       ...options.headers
     }
   });
- 
+
   if (!response.ok) {
     const errorText = await response.text();
     const error = new Error(`Qdrant API error [${response.status}]: ${errorText}`);
     error.status = response.status;
     throw error;
   }
- 
+
   return response.json();
 };
- 
-/**
- * Initializes the PDF chunks collection in Qdrant if configured.
- * Same safe-degrade logic as vectorService.js's initCollection: a bad or
- * unreachable Qdrant config logs a warning and returns false, it never
- * crashes the server.
- */
+
+// Qdrant rejects filtered searches on a field with no payload index.
+// Safe to repeat, so it runs for both new and existing collections.
+const ensureDocumentIdIndex = async () => {
+  await qdrantFetch(`/collections/${vectorDbConfig.collections.pdfChunks}/index?wait=true`, {
+    method: 'PUT',
+    body: JSON.stringify({ field_name: 'documentId', field_schema: 'keyword' })
+  });
+};
+
 export const initPdfCollection = async () => {
   if (!vectorDbConfig.isConfigured) {
     console.log('Qdrant not configured. Skipping PDF collection initialization.');
     return false;
   }
- 
+
   try {
     console.log(`Checking if Qdrant collection '${vectorDbConfig.collections.pdfChunks}' exists...`);
     await qdrantFetch(`/collections/${vectorDbConfig.collections.pdfChunks}`);
     console.log(`Qdrant collection '${vectorDbConfig.collections.pdfChunks}' already exists.`);
-    // The collection may already exist from before the documentId payload
-    // index was added below — ensure it's present either way. Creating an
-    // index that already exists is a harmless no-op in Qdrant.
     await ensureDocumentIdIndex();
     return true;
   } catch (error) {
@@ -56,7 +54,7 @@ export const initPdfCollection = async () => {
       );
       return false;
     }
- 
+
     try {
       console.log(`Creating Qdrant collection '${vectorDbConfig.collections.pdfChunks}'...`);
       await qdrantFetch(`/collections/${vectorDbConfig.collections.pdfChunks}`, {
@@ -69,6 +67,8 @@ export const initPdfCollection = async () => {
         })
       });
       console.log(`Qdrant collection '${vectorDbConfig.collections.pdfChunks}' created successfully.`);
+      // Short pause so a brand-new collection is ready before the first write.
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       await ensureDocumentIdIndex();
       return true;
     } catch (createError) {
@@ -80,90 +80,39 @@ export const initPdfCollection = async () => {
     }
   }
 };
- 
-/**
- * Ensures Qdrant has a "keyword" payload index on the `documentId` field.
- * Without this, searchPdfChunks' filtered search (filter by documentId)
- * fails with a 400 "Index required but not found" error — every single
- * Study-from-PDF question would silently return "no relevant content
- * found" even for a correctly-uploaded, correctly-embedded document.
- */
-const ensureDocumentIdIndex = async () => {
-  try {
-    await qdrantFetch(`/collections/${vectorDbConfig.collections.pdfChunks}/index`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        field_name: 'documentId',
-        field_schema: 'keyword'
-      })
-    });
-    console.log(`Ensured 'documentId' payload index exists on '${vectorDbConfig.collections.pdfChunks}'.`);
-  } catch (error) {
-    console.error(
-      `WARNING: Failed to create 'documentId' payload index (${error.message}). ` +
-      `PDF question search will fail until this index exists.`
-    );
-  }
-};
- 
-/**
- * Embeds and stores every chunk of one uploaded document into Qdrant.
- * Called once, right after a PDF is uploaded and chunked.
- *
- * If Qdrant isn't configured, this still "succeeds" in the sense that it
- * doesn't throw — it just has nothing to store into, matching the same
- * optional/derived-index philosophy used everywhere else in this project.
- *
- * @param {string} documentId - the Mongo _id of the Document record
- * @param {string} fileName - original uploaded file name, for display later
- * @param {string[]} chunks - array of chunk text, from chunkingService.js
- * @returns {Promise<number>} how many chunks were successfully embedded and stored
- */
+
 export const storeChunks = async (documentId, fileName, chunks) => {
   let storedCount = 0;
- 
+
   for (let i = 0; i < chunks.length; i++) {
-    const chunkText = chunks[i];
- 
     try {
-      const vector = await generateEmbedding(chunkText);
- 
+      const vector = await generateEmbedding(chunks[i]);
+
       if (vectorDbConfig.isConfigured) {
-        await qdrantFetch(`/collections/${vectorDbConfig.collections.pdfChunks}/points`, {
+        const point = buildPdfChunkPoint({
+          documentId,
+          fileName,
+          chunkIndex: i,
+          chunkText: chunks[i],
+          vector
+        });
+
+        await qdrantFetch(`/collections/${vectorDbConfig.collections.pdfChunks}/points?wait=true`, {
           method: 'PUT',
-          body: JSON.stringify({
-            points: [
-              {
-                id: generateNumericId(`${documentId}-${i}`),
-                vector,
-                payload: {
-                  documentId: documentId.toString(),
-                  fileName,
-                  chunkIndex: i,
-                  chunkText,
-                  sourceType: 'uploaded_pdf',
-                  pageNumber: null // pdf-parse doesn't expose per-chunk page boundaries
-                }
-              }
-            ]
-          })
+          body: JSON.stringify({ points: [point] })
         });
       }
- 
+
       storedCount += 1;
       console.log(`[${i + 1}/${chunks.length}] Stored chunk for document ${documentId}`);
     } catch (error) {
-      // One bad chunk shouldn't fail the whole upload — log it and continue,
-      // same resilience pattern as scripts/populateVectors.js.
       console.error(`Failed to store chunk ${i} for document ${documentId}: ${error.message}`);
     }
   }
- 
+
   return storedCount;
 };
- 
-// Same hashing approach as vectorService.js, so Qdrant point IDs stay
-// simple integers regardless of what string we build them from.
+
 function generateNumericId(idString) {
   let hash = 0;
   for (let i = 0; i < idString.length; i++) {
@@ -172,7 +121,7 @@ function generateNumericId(idString) {
   }
   return Math.abs(hash);
 }
- 
+
 export default {
   initPdfCollection,
   storeChunks

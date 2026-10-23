@@ -1,20 +1,11 @@
 import Document from '../models/Document.js';
+import vectorDbConfig from '../config/vectorDb.js';
 import { extractTextFromPdf } from '../services/pdfExtractionService.js';
 import { chunkText } from '../services/chunkingService.js';
 import { storeChunks } from '../services/pdfVectorService.js';
 import { generatePdfAnswer } from '../services/pdfRagService.js';
 
-/**
- * POST /api/documents/upload
- * Accepts one PDF (field name "pdf"), extracts its text, chunks it,
- * embeds and stores the chunks in Qdrant, and records the result in MongoDB.
- *
- * This is a single synchronous request/response — no background job queue
- * (per the project's "keep it simple" decision). For a 10MB PDF near the
- * 40-chunk cap at the current embedding throttle, this can take a couple
- * of minutes; the frontend (Component 9) will show a processing state
- * for the duration of this one request.
- */
+// POST /api/documents/upload — extract, chunk, embed and store in Qdrant
 export const uploadDocument = async (req, res, next) => {
   let document;
 
@@ -38,6 +29,11 @@ export const uploadDocument = async (req, res, next) => {
 
     const storedCount = await storeChunks(document._id, document.fileName, chunks);
 
+    // If Qdrant is on but nothing was stored, fail honestly instead of reporting "ready".
+    if (vectorDbConfig.isConfigured && storedCount === 0) {
+      throw new Error('Chunks were created but none could be stored in Qdrant.');
+    }
+
     document.status = 'ready';
     document.chunkCount = storedCount;
     await document.save();
@@ -52,9 +48,9 @@ export const uploadDocument = async (req, res, next) => {
       }
     });
   } catch (error) {
-    // A failure here is usually a bad/unreadable PDF (student input problem),
-    // not a server bug — record it on the Document if one was created, and
-    // respond with a clear message rather than a generic 500.
+    // Log the real reason — the response alone hid it before.
+    console.error(`[Upload failed] ${error.message}`);
+
     if (document) {
       document.status = 'failed';
       document.errorMessage = error.message;
@@ -68,10 +64,7 @@ export const uploadDocument = async (req, res, next) => {
   }
 };
 
-/**
- * GET /api/documents/:id
- * Lets the frontend check a document's processing status.
- */
+// GET /api/documents/:id — processing status
 export const getDocument = async (req, res, next) => {
   try {
     const document = await Document.findById(req.params.id);
@@ -81,19 +74,13 @@ export const getDocument = async (req, res, next) => {
       throw new Error('Document not found.');
     }
 
-    res.status(200).json({
-      success: true,
-      data: document
-    });
+    res.status(200).json({ success: true, data: document });
   } catch (error) {
     next(error);
   }
 };
 
-/**
- * POST /api/documents/:id/ask
- * Asks a question grounded in one specific uploaded document.
- */
+// POST /api/documents/:id/ask — question grounded in one uploaded document
 export const askDocumentQuestion = async (req, res, next) => {
   try {
     const { questionText } = req.body;
@@ -121,10 +108,7 @@ export const askDocumentQuestion = async (req, res, next) => {
 
     const result = await generatePdfAnswer(document._id, questionText);
 
-    res.status(200).json({
-      success: true,
-      data: result
-    });
+    res.status(200).json({ success: true, data: result });
   } catch (error) {
     next(error);
   }
